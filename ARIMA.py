@@ -10,7 +10,7 @@ from datetime import datetime
 from sklearn.metrics import mean_squared_error
 from scipy.stats import norm
 import pandas as pd
-from statsmodels.graphics.tsaplots import plot_acf
+from statsmodels.graphics.tsaplots import plot_acf, plot_pcf
 from arch import arch_model
 import pickle
 from statsmodels.regression.linear_model import OLS
@@ -110,6 +110,8 @@ plt.plot(series)
 plt.show()
 autocorrelation_plot(series)
 plt.show()
+plot_pacf(series)
+plt.show()
 ### fit model
 model = ARIMA(series, order=(p,d,q))
 model_fit = model.fit(disp=0)
@@ -120,7 +122,12 @@ residuals.plot()
 plt.show()
 residuals.plot(kind='kde')
 plt.show()
+
 print(residuals.describe())
+plot_acf(residuals)
+plt.show()
+plot_pacf(residuals)
+plt.show()
 
 size = int(len(series) * 0.66)
 train, test = series[0:size], series[size:len(series)]
@@ -141,7 +148,7 @@ print('Test MSE: %.3f' % error)
 plt.plot(test)
 plt.plot(predictions, color='red')
 plt.show()
-AIC = 2*(-np.sum(stats.norm.logpdf(test, predictions)))+ (2*(p+q+d+1))
+#AIC = 2*(-np.sum(stats.norm.logpdf(test, predictions)))+ (2*(p+q+d+1))
 ####### GARCH
 train.mean()
 squared_data = (train-train.mean())**2
