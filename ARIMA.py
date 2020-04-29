@@ -16,6 +16,7 @@ import pickle
 from statsmodels.regression.linear_model import OLS
 from statsmodels.tsa.tsatools import lagmat, add_trend
 from statsmodels.tsa.adfvalues import mackinnonp
+import scipy.stats as stats
 
 def adf(ts, maxlag=1):
     """
@@ -202,7 +203,8 @@ plt.plot(series2)
 plt.show()
 autocorrelation_plot(series2)
 plt.show()
-cadf(series, series2)
+p_value = cadf(series, series2)
+p_value
 ##
 ### Getting back the objects:
 ##with open('objs.pkl') as f:  # Python 3: open(..., 'rb')
