@@ -107,6 +107,7 @@ all_data = DataFrame()
 all_data['price'] = series
 all_data['month'] = sorted(list_unique_crop[farm_ind].delivery_start_date)
 plt.plot(series)
+plt.title("Price VS delivery_start_date")
 plt.show()
 autocorrelation_plot(series)
 plt.show()
@@ -119,8 +120,10 @@ print(model_fit.summary())
 ###plot residual errors
 residuals = DataFrame(model_fit.resid)
 residuals.plot()
+plt.title("ARIMA residuals VS delivery_start_date")
 plt.show()
 residuals.plot(kind='kde')
+plt.title("ARIMA residuals distribution")
 plt.show()
 
 print(residuals.describe())
@@ -145,6 +148,7 @@ for t in range(len(test)):
 error = mean_squared_error(test, predictions)
 
 print('Test MSE: %.3f' % error)
+plt.title("ARIMA prediction VS Actual Values")
 plt.plot(test)
 plt.plot(predictions, color='red')
 plt.show()
@@ -159,7 +163,8 @@ model = arch_model(squared_data, mean='Zero', vol='ARCH', p=15)
 model_fit = model.fit()
 yhat = model_fit.forecast(horizon=len(test))
 plt.plot(test_var)
-plt.plot(yhat.variance.values[-1,:])
+plt.plot(yhat.variance.values[-1,:], color='red')
+plt.title("ARCH prediction VS Actual Values")
 plt.show()
 
 model = arch_model(squared_data, mean='Zero', vol='GARCH', p=15, q=15)
@@ -167,14 +172,17 @@ model_fit = model.fit()
 print(model_fit.summary)
 yhat = model_fit.forecast(horizon=len(test))
 plt.plot(test_var)
-plt.plot(yhat.variance.values[-1,:])
+plt.plot(yhat.variance.values[-1,:], color='red')
+plt.title("GARCH prediction VS Actual Values")
 plt.show()
 #######Monte Carlo Simulation
 train_DataFrame = DataFrame(train)
 log_returns = np.log(1+train_DataFrame.pct_change())
+plt.title("Train data")
 train_DataFrame.plot()
 plt.show()
 log_returns.plot()
+plt.title("Log of Percent of Change of Train data")
 plt.show()
 
 u = log_returns.mean()
@@ -195,6 +203,7 @@ for t in range(1, t_intervals):
     price_list_simulation[t] = price_list_simulation[t - 1] * daily_returns[t]
 plt.plot(range(1,len(train)+1),train)
 plt.plot(range(len(train)+1, len(train)+len(test)+1),price_list_simulation)
+plt.title("Monte Carlo Simulation (10 repeats)")
 plt.show()
 first_part = DataFrame(train)
 second_part = DataFrame(price_list_simulation)
@@ -208,6 +217,7 @@ all_data2 = DataFrame()
 all_data2['price'] = series2
 all_data2['month'] = sorted(list_unique_crop[farm_ind].delivery_end_date)
 plt.plot(series2)
+plt.title("ARIMA residuals VS delivery_end_date")
 plt.show()
 autocorrelation_plot(series2)
 plt.show()
@@ -228,7 +238,7 @@ print(p_value)
 ##import psycopg2
 ##try:
 ##    connection = psycopg2.connect(user = "postgres",
-##                                  password = "admin",
+##                                  password = "$$$$$$",
 ##                                  host = "127.0.0.1",
 ##                                  port = "5432",
 ##                                  database = "FarmLink")
