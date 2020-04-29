@@ -10,7 +10,7 @@ from datetime import datetime
 from sklearn.metrics import mean_squared_error
 from scipy.stats import norm
 import pandas as pd
-from statsmodels.graphics.tsaplots import plot_acf, plot_pcf
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from arch import arch_model
 import pickle
 from statsmodels.regression.linear_model import OLS
