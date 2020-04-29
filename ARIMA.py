@@ -164,6 +164,7 @@ plt.show()
 
 model = arch_model(squared_data, mean='Zero', vol='GARCH', p=15, q=15)
 model_fit = model.fit()
+print(model_fit.summary)
 yhat = model_fit.forecast(horizon=len(test))
 plt.plot(test_var)
 plt.plot(yhat.variance.values[-1,:])
@@ -210,8 +211,8 @@ plt.plot(series2)
 plt.show()
 autocorrelation_plot(series2)
 plt.show()
-p_value = cadf(series, series2)
-p_value
+p_value = cadf(series2, series)
+print(p_value)
 ##
 ### Getting back the objects:
 ##with open('objs.pkl') as f:  # Python 3: open(..., 'rb')
